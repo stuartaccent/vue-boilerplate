@@ -1,0 +1,25 @@
+@layer components {
+  .formkit-outer {
+    @apply mb-4;
+  }
+
+  .formkit-inner {
+    @apply mb-1;
+  }
+
+  .formkit-help {
+    @apply text-xs text-gray-500;
+  }
+
+  .formkit-messages {
+    @apply mt-1;
+  }
+
+  .formkit-message {
+    @apply mb-1 text-xs text-red-800;
+  }
+
+  .formkit-submit-error {
+    @apply p-2 bg-red-100 border border-red-500 text-red-800;
+  }
+}
