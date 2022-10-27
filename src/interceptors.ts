@@ -4,12 +4,12 @@ import type {
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import auth from "@/services/auth";
+import { authService } from "@/services/auth";
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  if (auth.accessToken) {
+  if (authService.accessToken) {
     if (config.headers) {
-      config.headers["Authorization"] = `bearer ${auth.accessToken}`;
+      config.headers["Authorization"] = `bearer ${authService.accessToken}`;
     }
   }
   return config;
@@ -27,7 +27,7 @@ const onResponseError = (error: AxiosError): Promise<AxiosError> => {
   // 401 bad token
   if (error.response && error.response.status === 401) {
     if (!error.response.config.url?.endsWith("logout")) {
-      auth.logout().then();
+      authService.logout().then();
     }
   }
 

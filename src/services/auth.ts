@@ -2,17 +2,17 @@ import { reactive } from "vue";
 import axios from "axios";
 import router from "@/router";
 
-export interface ICredentials {
+export interface IAuthCredentials {
   username: string;
   password: string;
 }
 
-export interface IResetPassword {
+export interface IAuthResetPassword {
   token: string;
   password: string;
 }
 
-export interface IUser {
+export interface IAuthUser {
   id: string | null;
   email: string | null;
   first_name: string | null;
@@ -22,14 +22,14 @@ export interface IUser {
   is_verified: boolean;
 }
 
-export interface IUserUpdate {
+export interface IAuthUserUpdate {
   email: string;
   first_name: string;
   last_name: string;
 }
 
 export interface IAuthState {
-  user: IUser;
+  user: IAuthUser;
 }
 
 const initialState: IAuthState = {
@@ -44,28 +44,33 @@ const initialState: IAuthState = {
   },
 };
 
-const state: IAuthState = reactive({ ...initialState });
+export class AuthService {
+  state: IAuthState = reactive({ ...initialState });
 
-export default {
   get accessToken(): string | null {
     return localStorage.getItem("access_token");
-  },
+  }
+
   get authenticated(): boolean {
     return this.accessToken !== null;
-  },
-  get user(): IUser {
-    return state.user;
-  },
-  async forgotPassword(email: string) {
+  }
+
+  get user(): IAuthUser {
+    return this.state.user;
+  }
+
+  async forgotPassword(email: string): Promise<void> {
     const url = "auth/forgot-password";
     await axios.post(url, { email: email });
-  },
-  async me() {
+  }
+
+  async me(): Promise<void> {
     const url = "users/me";
     const response = await axios.get(url);
-    state.user = response.data;
-  },
-  async login(credentials: ICredentials) {
+    this.state.user = response.data;
+  }
+
+  async login(credentials: IAuthCredentials): Promise<void> {
     const url = "auth/token/login";
     const data = new FormData();
     data.append("username", credentials.username);
@@ -73,8 +78,9 @@ export default {
     const response = await axios.post(url, data);
     localStorage.setItem("access_token", response.data.access_token);
     await this.me();
-  },
-  async logout() {
+  }
+
+  async logout(): Promise<void> {
     const url = "auth/token/logout";
     try {
       await axios.post(url);
@@ -83,18 +89,23 @@ export default {
     }
     this.reset();
     await router.push("/login");
-  },
-  async resetPassword(data: IResetPassword) {
+  }
+
+  async resetPassword(data: IAuthResetPassword): Promise<void> {
     const url = "auth/reset-password";
     await axios.post(url, data);
-  },
-  async update(data: IUserUpdate) {
+  }
+
+  async update(data: IAuthUserUpdate): Promise<void> {
     const url = "users/me";
     const response = await axios.patch(url, data);
-    state.user = response.data;
-  },
-  reset() {
-    state.user = initialState.user;
+    this.state.user = response.data;
+  }
+
+  reset(): void {
+    this.state.user = initialState.user;
     localStorage.clear();
-  },
-};
+  }
+}
+
+export const authService = new AuthService();

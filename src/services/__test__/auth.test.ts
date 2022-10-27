@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Mock } from "vitest";
-import authService from "@/services/auth";
+import { authService } from "@/services/auth";
 import axios from "axios";
 
 describe("authService", () => {

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import authService from "@/services/auth";
+import { authService } from "@/services/auth";
 import CenterFormWrapper from "@/components/CenterFormWrapper.vue";
 import { prepareErrors } from "@/errorhandler";
 

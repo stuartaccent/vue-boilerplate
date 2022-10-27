@@ -4,7 +4,7 @@ import ForgotPasswordConfirmView from "@/views/auth/ForgotPasswordConfirmView.vu
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import ProfileView from "@/views/auth/ProfileView.vue";
-import auth from "@/services/auth";
+import { authService } from "@/services/auth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +38,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  if (!auth.authenticated && to.meta.requiresAuth) {
+  if (!authService.authenticated && to.meta.requiresAuth) {
     return { path: "/login" };
   }
 });

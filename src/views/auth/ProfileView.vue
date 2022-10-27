@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import authService from "@/services/auth";
+import { authService } from "@/services/auth";
 import PageWrapper from "@/components/PageWrapper.vue";
 import { prepareErrors } from "@/errorhandler";
 import MessageSuccess from "@/components/MessageSuccess.vue";
