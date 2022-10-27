@@ -19,10 +19,11 @@ export default defineComponent({
   },
   async created() {
     await this.authService.me();
+    const user = this.authService.state.user;
     this.data = {
-      email: this.authService.user.email,
-      first_name: this.authService.user.first_name,
-      last_name: this.authService.user.last_name,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
     };
   },
   methods: {

@@ -55,10 +55,6 @@ export class AuthService {
     return this.accessToken !== null;
   }
 
-  get user(): IAuthUser {
-    return this.state.user;
-  }
-
   async forgotPassword(email: string): Promise<void> {
     const url = "auth/forgot-password";
     await axios.post(url, { email: email });

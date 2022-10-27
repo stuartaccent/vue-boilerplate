@@ -34,20 +34,6 @@ describe("authService", () => {
     });
   });
 
-  describe("user", () => {
-    it("should default to an empty user", () => {
-      expect(authService.user).toEqual({
-        id: null,
-        email: null,
-        first_name: null,
-        last_name: null,
-        is_active: false,
-        is_superuser: false,
-        is_verified: false,
-      });
-    });
-  });
-
   describe("forgotPassword", () => {
     it("should post correctly", async () => {
       (axios.post as Mock).mockResolvedValueOnce({ data: {} });
@@ -77,7 +63,7 @@ describe("authService", () => {
       };
       (axios.get as Mock).mockResolvedValueOnce({ data: data });
       await authService.me();
-      expect(authService.user).toEqual(data);
+      expect(authService.state.user).toEqual(data);
     });
   });
 
@@ -105,7 +91,7 @@ describe("authService", () => {
         password: "password",
       });
       expect(Storage.prototype.setItem).toBeCalledWith("access_token", "token");
-      expect(authService.user).toEqual(me);
+      expect(authService.state.user).toEqual(me);
     });
   });
 
