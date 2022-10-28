@@ -3,52 +3,52 @@ import { mount, RouterLinkStub } from "@vue/test-utils";
 import { defaultConfig, plugin } from "@formkit/vue";
 import ForgotPasswordConfirmView from "@/views/auth/ForgotPasswordConfirmView.vue";
 
-declare module "vitest" {
-  export interface TestContext {
-    comp: any;
-  }
-}
-
 const mockRoute = {
   params: {
     token: "token",
   },
 };
 
-describe("ForgotPasswordConfirmView", () => {
-  beforeEach((ctx) => {
-    ctx.comp = mount(ForgotPasswordConfirmView, {
-      global: {
-        stubs: {
-          CenterFormWrapper: {
-            template: "<slot></slot>",
-            props: {
-              title: String,
-              welcome: String,
-            },
+function mountComponent() {
+  return mount(ForgotPasswordConfirmView, {
+    global: {
+      stubs: {
+        CenterFormWrapper: {
+          template: "<slot></slot>",
+          props: {
+            title: String,
+            welcome: String,
           },
-          RouterLink: RouterLinkStub,
         },
-        mocks: {
-          $route: mockRoute,
-        },
-        plugins: [[plugin, defaultConfig]],
+        RouterLink: RouterLinkStub,
       },
-    });
+      mocks: {
+        $route: mockRoute,
+      },
+      plugins: [[plugin, defaultConfig]],
+    },
+  });
+}
+
+let comp: ReturnType<typeof mountComponent>;
+
+describe("ForgotPasswordConfirmView", () => {
+  beforeEach(() => {
+    comp = mountComponent();
   });
 
-  it("renders properly", ({ comp }) => {
+  it("renders properly", () => {
     expect(comp).toBeDefined();
   });
 
-  it("contains a form", async ({ comp }) => {
+  it("contains a form", async () => {
     await comp.vm.$nextTick();
     expect(comp.get('input[name="password"]')).toBeDefined();
     expect(comp.get('input[name="password_confirm"]')).toBeDefined();
     expect(comp.get('button[type="submit"]')).toBeDefined();
   });
 
-  it("success message when true", async ({ comp }) => {
+  it("success message when true", async () => {
     const msg = "Your password has been reset.";
     expect(comp.html()).not.toContain(msg);
     comp.vm.$data.success = true;
@@ -56,17 +56,18 @@ describe("ForgotPasswordConfirmView", () => {
     expect(comp.html()).toContain(msg);
   });
 
-  it("submit success", async ({ comp }) => {
+  it("submit success", async () => {
     await comp.vm.$nextTick();
-    vi.spyOn(comp.vm.$data.authService, "resetPassword").mockResolvedValueOnce(
-      {}
-    );
+    vi.spyOn(
+      comp.vm.$data.authService,
+      "resetPassword"
+    ).mockResolvedValueOnce();
     await comp.vm.submit({ password: "pw", password_confirm: "pw" });
     await comp.vm.$nextTick();
     expect(comp.vm.$data.success).toEqual(true);
   });
 
-  it("submit failure", async ({ comp }) => {
+  it("submit failure", async () => {
     await comp.vm.$nextTick();
     vi.spyOn(comp.vm.$data.authService, "resetPassword").mockRejectedValueOnce(
       {}

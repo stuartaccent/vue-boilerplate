@@ -5,12 +5,6 @@ import { defaultConfig, plugin } from "@formkit/vue";
 import { AuthService } from "@/services/auth";
 import ProfileView from "@/views/auth/ProfileView.vue";
 
-declare module "vitest" {
-  export interface TestContext {
-    comp: any;
-  }
-}
-
 class MockAuthService extends AuthService {
   state = reactive({
     user: {
@@ -29,35 +23,41 @@ class MockAuthService extends AuthService {
   }
 }
 
-describe("ProfileView", () => {
-  beforeEach((ctx) => {
-    ctx.comp = mount(ProfileView, {
-      global: {
-        stubs: {
-          PageWrapper: {
-            template: "<slot></slot>",
-            props: {
-              title: String,
-            },
+function mountComponent() {
+  return mount(ProfileView, {
+    global: {
+      stubs: {
+        PageWrapper: {
+          template: "<slot></slot>",
+          props: {
+            title: String,
           },
         },
-        plugins: [[plugin, defaultConfig]],
       },
-      data() {
-        return {
-          authService: new MockAuthService(),
-          success: false,
-          data: {},
-        };
-      },
-    });
+      plugins: [[plugin, defaultConfig]],
+    },
+    data() {
+      return {
+        authService: new MockAuthService(),
+        success: false,
+        data: {},
+      };
+    },
+  });
+}
+
+let comp: ReturnType<typeof mountComponent>;
+
+describe("ProfileView", () => {
+  beforeEach(() => {
+    comp = mountComponent();
   });
 
-  it("renders properly", ({ comp }) => {
+  it("renders properly", () => {
     expect(comp).toBeDefined();
   });
 
-  it("contains a form", async ({ comp }) => {
+  it("contains a form", async () => {
     await comp.vm.$nextTick();
     expect(comp.get('input[name="email"]')).toBeDefined();
     expect(comp.get('input[name="first_name"]')).toBeDefined();
@@ -65,7 +65,7 @@ describe("ProfileView", () => {
     expect(comp.get('button[type="submit"]')).toBeDefined();
   });
 
-  it("data is set when created", async ({ comp }) => {
+  it("data is set when created", async () => {
     await comp.vm.$nextTick();
     expect(comp.vm.$data.data).toEqual({
       email: "me@example.com",
@@ -74,7 +74,7 @@ describe("ProfileView", () => {
     });
   });
 
-  it("success message when true", async ({ comp }) => {
+  it("success message when true", async () => {
     const msg = "Your profile was updated successfully.";
     expect(comp.html()).not.toContain(msg);
     comp.vm.$data.success = true;
@@ -82,11 +82,11 @@ describe("ProfileView", () => {
     expect(comp.html()).toContain(msg);
   });
 
-  it("submit success", async ({ comp }) => {
+  it("submit success", async () => {
     await comp.vm.$nextTick();
     const spy = vi
       .spyOn(comp.vm.$data.authService, "update")
-      .mockResolvedValueOnce({});
+      .mockResolvedValueOnce();
     const data = comp.vm.$data.data;
     await comp.vm.submit(data);
     await comp.vm.$nextTick();
@@ -94,7 +94,7 @@ describe("ProfileView", () => {
     expect(comp.vm.$data.success).toEqual(true);
   });
 
-  it("submit failure", async ({ comp }) => {
+  it("submit failure", async () => {
     await comp.vm.$nextTick();
     vi.spyOn(comp.vm.$data.authService, "update").mockRejectedValueOnce({});
     const spy = vi.spyOn(comp.vm.$formkit, "setErrors");
