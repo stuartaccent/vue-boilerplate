@@ -6,5 +6,6 @@
 @import "tailwindcss/components";
 @import "./styles/components/button.css";
 @import "./styles/components/formkit.css";
+@import "./styles/components/message.css";
 
 @import "tailwindcss/utilities";

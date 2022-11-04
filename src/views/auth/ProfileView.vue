@@ -3,11 +3,11 @@ import { defineComponent } from "vue";
 import { authService } from "@/services/auth";
 import PageWrapper from "@/components/PageWrapper.vue";
 import { prepareErrors } from "@/errorhandler";
-import MessageSuccess from "@/components/MessageSuccess.vue";
+import MessageBox from "@/components/MessageBox.vue";
 
 export default defineComponent({
   components: {
-    MessageSuccess,
+    MessageBox,
     PageWrapper,
   },
   data() {
@@ -44,10 +44,10 @@ export default defineComponent({
 <template>
   <PageWrapper title="Profile">
     <div class="max-w-xl">
-      <MessageSuccess v-if="success" class="mb-6">
+      <MessageBox type="success" v-if="success" class="mb-6">
         <p class="font-bold">Success</p>
         <p>Your profile was updated successfully.</p>
-      </MessageSuccess>
+      </MessageBox>
       <FormKit
         id="appform"
         v-model="data"

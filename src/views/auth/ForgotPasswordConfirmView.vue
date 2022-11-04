@@ -2,13 +2,13 @@
 import { defineComponent } from "vue";
 import { authService } from "@/services/auth";
 import CenterFormWrapper from "@/components/CenterFormWrapper.vue";
-import MessageInfo from "@/components/MessageInfo.vue";
+import MessageBox from "@/components/MessageBox.vue";
 import { prepareErrors } from "@/errorhandler";
 
 export default defineComponent({
   components: {
     CenterFormWrapper,
-    MessageInfo,
+    MessageBox,
   },
   data() {
     return {
@@ -71,12 +71,12 @@ export default defineComponent({
         input-class="button-primary w-full"
       />
     </FormKit>
-    <MessageInfo v-if="success">
+    <MessageBox type="info" v-if="success">
       <p>
         Your password has been reset. You can now
         <RouterLink to="/login">Login</RouterLink>
         using your new password.
       </p>
-    </MessageInfo>
+    </MessageBox>
   </CenterFormWrapper>
 </template>

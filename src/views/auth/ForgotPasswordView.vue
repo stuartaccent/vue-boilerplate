@@ -2,12 +2,12 @@
 import { defineComponent } from "vue";
 import { authService } from "@/services/auth";
 import CenterFormWrapper from "@/components/CenterFormWrapper.vue";
-import MessageInfo from "@/components/MessageInfo.vue";
+import MessageBox from "@/components/MessageBox.vue";
 
 export default defineComponent({
   components: {
     CenterFormWrapper,
-    MessageInfo,
+    MessageBox,
   },
   data() {
     return {
@@ -56,11 +56,11 @@ export default defineComponent({
         input-class="button-primary w-full"
       />
     </FormKit>
-    <MessageInfo v-if="success">
+    <MessageBox type="info" v-if="success">
       <p>
         Assuming the email exists in our system. We will send details of what to
         do next.
       </p>
-    </MessageInfo>
+    </MessageBox>
   </CenterFormWrapper>
 </template>
