@@ -44,7 +44,7 @@ export default defineComponent({
 <template>
   <PageWrapper title="Profile">
     <div class="max-w-xl">
-      <MessageBox type="success" v-if="success" class="mb-6">
+      <MessageBox v-if="success" class="mb-6" type="message-success">
         <p class="font-bold">Success</p>
         <p>Your profile was updated successfully.</p>
       </MessageBox>

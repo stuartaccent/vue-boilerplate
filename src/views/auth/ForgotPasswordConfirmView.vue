@@ -71,7 +71,7 @@ export default defineComponent({
         input-class="button-primary w-full"
       />
     </FormKit>
-    <MessageBox type="info" v-if="success">
+    <MessageBox v-if="success" type="message-info">
       <p>
         Your password has been reset. You can now
         <RouterLink to="/login">Login</RouterLink>

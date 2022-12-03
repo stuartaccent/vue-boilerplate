@@ -56,7 +56,7 @@ export default defineComponent({
         input-class="button-primary w-full"
       />
     </FormKit>
-    <MessageBox type="info" v-if="success">
+    <MessageBox v-if="success" type="message-info">
       <p>
         Assuming the email exists in our system. We will send details of what to
         do next.

@@ -1,15 +1,22 @@
 <script lang="ts">
+import type { PropType } from "vue";
 import { defineComponent } from "vue";
+
+type messageType =
+  | "message-info"
+  | "message-error"
+  | "message-success"
+  | "message-warning";
 
 export default defineComponent({
   props: {
-    type: String,
+    type: Object as PropType<messageType>,
   },
 });
 </script>
 
 <template>
-  <div :class="'message message-' + type">
+  <div :class="'message ' + type">
     <slot></slot>
   </div>
 </template>

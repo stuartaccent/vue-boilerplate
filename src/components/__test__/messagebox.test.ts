@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
 import MessageBox from "@/components/MessageBox.vue";
 
@@ -6,7 +6,7 @@ describe("MessageBox", () => {
   it("success", () => {
     const message = mount(MessageBox, {
       slots: { default: "Some message" },
-      attrs: { type: "success" },
+      attrs: { type: "message-success" },
     });
     expect(message.html()).toContain("Some message");
     expect(message.html()).toContain("message message-success");
@@ -15,7 +15,7 @@ describe("MessageBox", () => {
   it("info", () => {
     const message = mount(MessageBox, {
       slots: { default: "Some message" },
-      attrs: { type: "info" },
+      attrs: { type: "message-info" },
     });
     expect(message.html()).toContain("Some message");
     expect(message.html()).toContain("message message-info");
@@ -24,7 +24,7 @@ describe("MessageBox", () => {
   it("warning", () => {
     const message = mount(MessageBox, {
       slots: { default: "Some message" },
-      attrs: { type: "warning" },
+      attrs: { type: "message-warning" },
     });
     expect(message.html()).toContain("Some message");
     expect(message.html()).toContain("message message-warning");
@@ -33,7 +33,7 @@ describe("MessageBox", () => {
   it("error", () => {
     const message = mount(MessageBox, {
       slots: { default: "Some message" },
-      attrs: { type: "error" },
+      attrs: { type: "message-error" },
     });
     expect(message.html()).toContain("Some message");
     expect(message.html()).toContain("message message-error");
