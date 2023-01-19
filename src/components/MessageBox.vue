@@ -10,7 +10,7 @@ type messageType =
 
 export default defineComponent({
   props: {
-    type: Object as PropType<messageType>,
+    type: String as PropType<messageType>,
   },
 });
 </script>
