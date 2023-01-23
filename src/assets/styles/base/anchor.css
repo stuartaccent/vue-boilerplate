@@ -1,6 +1,6 @@
 @layer base {
-    a {
-        @apply text-sky-500;
-        @apply hover:text-sky-700 hover:cursor-pointer;
-    }
+  a {
+    @apply text-sky-500;
+    @apply hover:text-sky-700 hover:cursor-pointer;
+  }
 }

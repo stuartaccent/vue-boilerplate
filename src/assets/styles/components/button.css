@@ -1,15 +1,13 @@
 @layer components {
   .button-primary {
-    @apply
-    bg-sky-500
+    @apply bg-sky-500
     text-white
     text-sm
     font-normal
     py-3
     px-5;
 
-    @apply
-    hover:bg-sky-600
+    @apply hover:bg-sky-600
     hover:text-white;
   }
 }
