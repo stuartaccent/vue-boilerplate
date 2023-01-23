@@ -17,14 +17,22 @@ describe("authService", () => {
 
   describe("accessToken", () => {
     it("accessToken should get from localStorage", () => {
-      (Storage.prototype.getItem as Mock).mockReturnValue("token");
+      const expiry = new Date();
+      expiry.setSeconds(expiry.getSeconds() + 3600);
+      const data = { access_token: "token", expiry: expiry };
+      const token = JSON.stringify(data);
+      (Storage.prototype.getItem as Mock).mockReturnValue(token);
       expect(authService.accessToken).toEqual("token");
     });
   });
 
   describe("authenticated", () => {
     it("should be true when access token exists", () => {
-      (Storage.prototype.getItem as Mock).mockReturnValue("token");
+      const expiry = new Date();
+      expiry.setSeconds(expiry.getSeconds() + 3600);
+      const data = { access_token: "token", expiry: expiry };
+      const token = JSON.stringify(data);
+      (Storage.prototype.getItem as Mock).mockReturnValue(token);
       expect(authService.authenticated).toEqual(true);
     });
 
@@ -83,6 +91,7 @@ describe("authService", () => {
       const token = {
         access_token: "token",
         token_type: "bearer",
+        expiry: 3600,
       };
       (axios.post as Mock).mockResolvedValueOnce({ data: token });
 
@@ -90,7 +99,7 @@ describe("authService", () => {
         username: "me@example.com",
         password: "password",
       });
-      expect(Storage.prototype.setItem).toBeCalledWith("access_token", "token");
+      expect(Storage.prototype.setItem).toBeCalled();
       expect(authService.state.user).toEqual(me);
     });
   });

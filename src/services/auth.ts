@@ -48,7 +48,18 @@ export class AuthService {
   state: IAuthState = reactive({ ...initialState });
 
   get accessToken(): string | null {
-    return localStorage.getItem("access_token");
+    const tokenStr = localStorage.getItem("token");
+    if (!tokenStr) return null;
+    const token = JSON.parse(tokenStr);
+    const now = new Date();
+    // compare the expiry time of the item with the current time
+    if (now.getTime() > token.expiry) {
+      // If the item is expired, delete the item from storage
+      // and return null
+      localStorage.removeItem("token");
+      return null;
+    }
+    return token.access_token;
   }
 
   get authenticated(): boolean {
@@ -72,7 +83,13 @@ export class AuthService {
     data.append("username", credentials.username);
     data.append("password", credentials.password);
     const response = await axios.post(url, data);
-    localStorage.setItem("access_token", response.data.access_token);
+    const expiry = new Date();
+    expiry.setSeconds(expiry.getSeconds() + response.data.expiry);
+    const tokenData = {
+      access_token: response.data.access_token,
+      expiry: expiry,
+    };
+    localStorage.setItem("token", JSON.stringify(tokenData));
     await this.me();
   }
 
