@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
 import HomeView from "@/views/HomeView.vue";
 
@@ -6,11 +6,8 @@ function mountComponent() {
   return mount(HomeView, {
     global: {
       stubs: {
-        PageWrapper: {
-          template: "<slot></slot>",
-          props: {
-            title: String,
-          },
+        NavBar: {
+          template: "<nav></nav>",
         },
       },
     },

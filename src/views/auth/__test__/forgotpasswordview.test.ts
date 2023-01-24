@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { defaultConfig, plugin } from "@formkit/vue";
 import ForgotPasswordView from "@/views/auth/ForgotPasswordView.vue";
@@ -7,12 +7,8 @@ function mountComponent() {
   return mount(ForgotPasswordView, {
     global: {
       stubs: {
-        CenterFormWrapper: {
-          template: "<slot></slot>",
-          props: {
-            title: String,
-            welcome: String,
-          },
+        FooterItem: {
+          template: "<footer></footer>",
         },
       },
       plugins: [[plugin, defaultConfig]],

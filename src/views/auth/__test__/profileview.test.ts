@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { reactive } from "vue";
 import { mount } from "@vue/test-utils";
 import { defaultConfig, plugin } from "@formkit/vue";
@@ -27,11 +27,8 @@ function mountComponent() {
   return mount(ProfileView, {
     global: {
       stubs: {
-        PageWrapper: {
-          template: "<slot></slot>",
-          props: {
-            title: String,
-          },
+        NavBar: {
+          template: "<nav></nav>",
         },
       },
       plugins: [[plugin, defaultConfig]],
