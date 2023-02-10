@@ -16,7 +16,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="'message ' + type">
+  <p :class="'message ' + type">
     <slot></slot>
-  </div>
+  </p>
 </template>

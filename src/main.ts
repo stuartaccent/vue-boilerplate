@@ -4,7 +4,12 @@ import router from "./router";
 import { defaultConfig, plugin } from "@formkit/vue";
 import axios from "axios";
 import { setupInterceptorsTo } from "./interceptors";
-import "./assets/main.css";
+import "./assets/main.scss";
+import {
+  helpStyle,
+  messageStyle,
+  removeBoxInnerWrapper,
+} from "@/formkit/plugins";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
@@ -15,6 +20,11 @@ const app = createApp(App);
 
 app.use(router);
 
-app.use(plugin, defaultConfig);
+app.use(
+  plugin,
+  defaultConfig({
+    plugins: [helpStyle, messageStyle, removeBoxInnerWrapper],
+  })
+);
 
 app.mount("#app");

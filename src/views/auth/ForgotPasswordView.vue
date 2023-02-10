@@ -36,37 +36,30 @@ export default defineComponent({
       <h2>Request details to change your password.</h2>
     </hgroup>
     <section class="max-w-[500px]">
-      <FormKit
+      <form-kit
         id="appform"
         :actions="false"
+        :incomplete-message="false"
         type="form"
-        messages-class="mb-4"
+        form-class="space-y-6"
         @submit="submit"
       >
-        <FormKit
+        <message-box v-if="success" type="message-info">
+          Assuming the email exists in our system. We will send details of what
+          to do next.
+        </message-box>
+        <form-kit
           label="Email address"
           name="email"
           placeholder="johndoe@example.com"
           type="email"
           validation="required|email"
-          outer-class="mb-6"
-          input-class="w-full"
         />
-        <FormKit
-          type="submit"
-          label="Request Details"
-          input-class="button-primary"
-        />
-      </FormKit>
-      <MessageBox v-if="success" type="message-info">
-        <p>
-          Assuming the email exists in our system. We will send details of what
-          to do next.
-        </p>
-      </MessageBox>
+        <form-kit type="submit" label="Request Details" />
+      </form-kit>
     </section>
   </main>
-  <FooterItem class="container mx-auto px-6" />
+  <footer-item class="container mx-auto px-6" />
 </template>
 
 <style scoped>

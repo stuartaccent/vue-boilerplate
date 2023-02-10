@@ -42,7 +42,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <NavBar />
+  <nav-bar />
   <header class="container mx-auto px-4 mb-10">
     <hgroup>
       <h1>Profile</h1>
@@ -52,44 +52,38 @@ export default defineComponent({
   <main class="container mx-auto px-4">
     <section>
       <div class="max-w-xl">
-        <MessageBox v-if="success" class="mb-6" type="message-success">
-          <p class="font-bold">Success</p>
-          <p>Your profile was updated successfully.</p>
-        </MessageBox>
-        <FormKit
+        <form-kit
           id="appform"
           v-model="data"
           :actions="false"
+          :incomplete-message="false"
           type="form"
+          form-class="space-y-6"
           @submit="submit"
-          messages-class="mb-4"
         >
-          <FormKit
+          <message-box v-if="success" type="message-success">
+            Your profile was updated successfully.
+          </message-box>
+          <form-kit
             label="Email address"
             name="email"
             type="email"
             validation="required|email"
-            outer-class="mb-6"
-            input-class="w-full"
           />
-          <FormKit
+          <form-kit
             label="First name"
             name="first_name"
             type="text"
             validation="required"
-            outer-class="mb-6"
-            input-class="w-full"
           />
-          <FormKit
+          <form-kit
             label="Last name"
             name="last_name"
             type="text"
             validation="required"
-            outer-class="mb-6"
-            input-class="w-full"
           />
-          <FormKit type="submit" label="Update" input-class="button-primary" />
-        </FormKit>
+          <form-kit type="submit" label="Update" />
+        </form-kit>
       </div>
     </section>
   </main>

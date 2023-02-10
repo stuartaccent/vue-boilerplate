@@ -42,47 +42,38 @@ export default defineComponent({
       <h2>Set a new password for your account.</h2>
     </hgroup>
     <section class="max-w-[500px]">
-      <FormKit
+      <form-kit
         id="appform"
         :actions="false"
+        :incomplete-message="false"
         type="form"
-        messages-class="mb-4"
+        form-class="space-y-6"
         @submit="submit"
       >
-        <FormKit
+        <message-box v-if="success" type="message-info">
+          Your password has been reset. You can now
+          <router-link to="/login">Login</router-link>
+          using your new password.
+        </message-box>
+        <form-kit
           label="New Password"
           name="password"
           placeholder="password"
           type="password"
           validation="required|length:6"
-          outer-class="mb-6"
-          input-class="w-full"
         />
-        <FormKit
+        <form-kit
           label="Repeat Your Password"
           name="password_confirm"
           placeholder="password"
           type="password"
           validation="required|confirm"
-          outer-class="mb-6"
-          input-class="w-full"
         />
-        <FormKit
-          type="submit"
-          label="Change Password"
-          input-class="button-primary"
-        />
-      </FormKit>
-      <MessageBox v-if="success" type="message-info">
-        <p>
-          Your password has been reset. You can now
-          <RouterLink to="/login">Login</RouterLink>
-          using your new password.
-        </p>
-      </MessageBox>
+        <form-kit type="submit" label="Change Password" />
+      </form-kit>
     </section>
   </main>
-  <FooterItem class="container mx-auto px-6" />
+  <footer-item class="container mx-auto px-6" />
 </template>
 
 <style scoped>

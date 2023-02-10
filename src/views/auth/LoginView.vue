@@ -32,41 +32,38 @@ export default defineComponent({
       <h2>Access your account.</h2>
     </hgroup>
     <section class="max-w-[500px]">
-      <FormKit
+      <form-kit
         id="appform"
         :actions="false"
+        :incomplete-message="false"
         type="form"
-        messages-class="mb-4"
+        form-class="space-y-6"
         @submit="submit"
       >
-        <FormKit
+        <form-kit
           label="Email address"
           name="username"
           placeholder="johndoe@example.com"
           type="email"
           validation="required|email"
-          outer-class="mb-6"
-          input-class="w-full"
         />
-        <FormKit
+        <form-kit
           label="Password"
           name="password"
           placeholder="password"
           type="password"
           validation="required"
-          outer-class="mb-6"
-          input-class="w-full"
         />
-        <div class="flex mb-6">
-          <RouterLink class="ml-auto text-sm" to="/forgotten-password">
+        <div class="text-right">
+          <router-link to="/forgotten-password">
             Forgotten your password?
-          </RouterLink>
+          </router-link>
         </div>
-        <FormKit type="submit" label="Login" input-class="button-primary" />
-      </FormKit>
+        <form-kit type="submit" label="Login" />
+      </form-kit>
     </section>
   </main>
-  <FooterItem class="container mx-auto px-6" />
+  <footer-item class="container mx-auto px-6" />
 </template>
 
 <style scoped>

@@ -8,7 +8,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <NavBar />
+  <nav-bar />
   <header class="container mx-auto px-4 mb-10">
     <hgroup>
       <h1>Homepage</h1>
