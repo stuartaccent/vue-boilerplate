@@ -12,13 +12,18 @@ export interface IAuthResetPassword {
   password: string;
 }
 
+export interface IAuthUserType {
+  name: string | null;
+  roles: string[];
+}
+
 export interface IAuthUser {
   id: string | null;
   email: string | null;
   first_name: string | null;
   last_name: string | null;
+  user_type: IAuthUserType;
   is_active: boolean;
-  is_superuser: boolean;
   is_verified: boolean;
 }
 
@@ -26,6 +31,7 @@ export interface IAuthUserUpdate {
   email: string;
   first_name: string;
   last_name: string;
+  password: string;
 }
 
 export interface IAuthState {
@@ -39,7 +45,10 @@ const initialState: IAuthState = {
     first_name: null,
     last_name: null,
     is_active: false,
-    is_superuser: false,
+    user_type: {
+      name: null,
+      roles: [],
+    },
     is_verified: false,
   },
 };

@@ -14,7 +14,7 @@ export default defineComponent({
     return {
       authService: authService,
       data: {},
-      success: false,
+      success: "",
     };
   },
   async created() {
@@ -27,14 +27,14 @@ export default defineComponent({
     };
   },
   methods: {
-    async submit(data: any) {
-      this.success = false;
+    async submit(formName: string, formData: any) {
+      this.success = "";
       try {
-        await this.authService.update(data);
-        this.success = true;
+        await this.authService.update(formData);
+        this.success = formName;
       } catch (e) {
         const prepare = prepareErrors(e);
-        this.$formkit.setErrors("appform", prepare.errors, prepare.fieldErrors);
+        this.$formkit.setErrors(formName, prepare.errors, prepare.fieldErrors);
       }
     },
   },
@@ -43,27 +43,22 @@ export default defineComponent({
 
 <template>
   <nav-bar />
-  <header class="container mx-auto px-4 mb-10">
-    <hgroup>
-      <h1>Profile</h1>
-      <h2>Update your details below.</h2>
-    </hgroup>
-  </header>
   <main class="container mx-auto px-4">
-    <section>
-      <div class="max-w-xl">
+    <section class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-8 mb-10">
+      <hgroup>
+        <h3>Profile</h3>
+        <h4>Update your profile.</h4>
+      </hgroup>
+      <div class="sm:col-span-2">
         <form-kit
-          id="appform"
+          id="profile"
           v-model="data"
           :actions="false"
           :incomplete-message="false"
           type="form"
-          form-class="space-y-6"
-          @submit="submit"
+          form-class="space-y-6 max-w-xl"
+          @submit="(formData) => submit('profile', formData)"
         >
-          <message-box v-if="success" type="message-success">
-            Your profile was updated successfully.
-          </message-box>
           <form-kit
             label="Email address"
             name="email"
@@ -82,7 +77,47 @@ export default defineComponent({
             type="text"
             validation="required"
           />
-          <form-kit type="submit" label="Update" />
+          <message-box v-if="success == 'profile'" type="message-success">
+            Your profile was updated successfully.
+          </message-box>
+          <form-kit type="submit" label="Update" input-class="sm:w-auto" />
+        </form-kit>
+      </div>
+    </section>
+    <section class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-8">
+      <hgroup>
+        <h3>Password</h3>
+        <h4>Change your password.</h4>
+      </hgroup>
+      <div class="sm:col-span-2">
+        <form-kit
+          id="password"
+          :actions="false"
+          :incomplete-message="false"
+          type="form"
+          form-class="space-y-6 max-w-xl"
+          @submit="(formData) => submit('password', formData)"
+        >
+          <form-kit
+            label="New Password"
+            name="password"
+            type="password"
+            validation="required"
+          />
+          <form-kit
+            label="Confirm New Password"
+            name="password_confirm"
+            type="password"
+            validation="required|confirm"
+          />
+          <message-box v-if="success == 'password'" type="message-success">
+            Your password was updated successfully.
+          </message-box>
+          <form-kit
+            type="submit"
+            label="Change Password"
+            input-class="sm:w-auto"
+          />
         </form-kit>
       </div>
     </section>
